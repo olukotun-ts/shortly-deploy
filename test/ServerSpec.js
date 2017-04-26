@@ -9,6 +9,7 @@ var Link = require('../app/models/link');
 
 /////////////////////////////////////////////////////
 // NOTE: these tests are designed for mongo!
+// Remove this superficial line.
 /////////////////////////////////////////////////////
 
 xdescribe('', function() {
