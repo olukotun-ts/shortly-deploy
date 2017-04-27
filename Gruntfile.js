@@ -3,6 +3,13 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     concat: {
+      options: {
+        separator: ';'
+      },
+      dist: {
+        src: 'public/client/**/*.js',
+        dest: 'public/dist/shortly_concat.js'
+      }
     },
 
     mochaTest: {
@@ -21,11 +28,20 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      my_target: {
+        files: {
+          'public/dist/shortly_concat_ugly.js' : ['public/dist/shortly_concat.js']
+        }
+      }
     },
 
     eslint: {
       target: [
-        // Add list of files to lint here
+        'app/**/*.js',
+        'lib/**/*.js',
+        'public/client/**/*.js',
+        'test/**/*.js',
+        './server-config.js'
       ]
     },
 
@@ -75,21 +91,27 @@ module.exports = function(grunt) {
   grunt.registerTask('test', [
     'mochaTest'
   ]);
-
+  //build and upload started on npm start
   grunt.registerTask('build', [
+    'mochaTest',
+    'eslint',
+    'concat',
+    'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
       // add your production server task here
+      // starts server in the VPS
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-  ]);
+  grunt.registerTask('deploy', function(n) {
+    // tasks that build and run app locally
+    grunt.task.run(['build', 'upload']);
+  });
 
 
 };
