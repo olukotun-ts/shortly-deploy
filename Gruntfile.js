@@ -69,6 +69,36 @@ module.exports = function(grunt) {
       prodServer: {
       }
     },
+
+    gitcommit: {
+      release: {
+        options: {
+          cwd: './'
+        }
+      },
+      files: {
+        src: ['.'],
+      }
+    },
+    gitadd: {
+      release: {
+        options: {
+          all: true,
+          force: false
+        }
+      },
+      files: {
+        src: ['.']
+      }
+    },
+    gitpush: {
+      release: {
+        options: {
+          branch: 'master',
+          remote: 'live'
+        }
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -79,6 +109,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-git');
 
   grunt.registerTask('server-dev', function (target) {
     grunt.task.run([ 'nodemon', 'watch' ]);
@@ -99,10 +130,11 @@ module.exports = function(grunt) {
     'uglify'
   ]);
 
+  grunt.registerTask('gitdeploy', ['gitadd','gitcommit','gitpush']);
+
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      // add your production server task here
-      // starts server in the VPS
+      grunt.task.run(['gitdeploy']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
