@@ -73,7 +73,8 @@ module.exports = function(grunt) {
     gitcommit: {
       release: {
         options: {
-          cwd: './'
+          cwd: './',
+          message: 'Automatic Commit'
         }
       },
       files: {
