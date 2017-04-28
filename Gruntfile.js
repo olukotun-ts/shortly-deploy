@@ -96,7 +96,8 @@ module.exports = function(grunt) {
       release: {
         options: {
           branch: 'master',
-          remote: 'live'
+          remote: 'live',
+          cwd: './'
         }
       }
     }
