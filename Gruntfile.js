@@ -71,7 +71,7 @@ module.exports = function(grunt) {
     },
 
     gitcommit: {
-      release: {
+      task: {
         options: {
           cwd: './',
           message: 'Automatic Commit'
@@ -82,7 +82,7 @@ module.exports = function(grunt) {
       }
     },
     gitadd: {
-      release: {
+      task: {
         options: {
           all: true,
           force: false
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
       }
     },
     gitpush: {
-      release: {
+      task: {
         options: {
           branch: 'master',
           remote: 'live',
